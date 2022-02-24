@@ -69,15 +69,18 @@ export const Profile = () => {
         return solution.upvotes;
       });
 
-      const highestTaskUpvotes = Math.max(...userTaskUpvotes).toString();
+      const highestTaskUpvotes =
+        userTaskUpvotes.length >= 1
+          ? Math.max(...userTaskUpvotes).toString()
+          : 0;
 
       setUpvotesModule({
         totalUpvotes: currentUser.upvotes,
         highestTaskUpvotes: highestTaskUpvotes,
         tasksUpvoted: currentUser.hearts.length,
         highestTaskUpvotesId:
-          taskSolutions[+highestTaskUpvotesIndex].taskId &&
-          taskSolutions[+highestTaskUpvotesIndex].taskId,
+          taskSolutions[+highestTaskUpvotesIndex]?.taskId &&
+          taskSolutions[+highestTaskUpvotesIndex]?.taskId,
       });
     }
   }, [currentUser, taskSolutions]);
