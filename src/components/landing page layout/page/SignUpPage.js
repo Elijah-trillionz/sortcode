@@ -17,9 +17,8 @@ export const SignUpPage = () => {
 
   if (error) {
     setTimeout(() => {
-      document.querySelector(
-        '.dev-form > .form'
-      ).scrollTop = document.querySelector('.dev-form > .form').scrollHeight;
+      document.querySelector('.dev-form > .form').scrollTop =
+        document.querySelector('.dev-form > .form').scrollHeight;
     }, 500);
   }
 
@@ -53,7 +52,7 @@ export const SignUpPage = () => {
             </div>
             <div className='signin-option discord'>
               <a
-                href={`https://discord.com/api/oauth2/authorize?client_id=841043559904706580&redirect_uri=https%3A%2F%2Fancient-stream-15771.herokuapp.com%2Fsign-in&response_type=code&scope=identify&state=${githubState}`}
+                href={`https://discord.com/api/oauth2/authorize?client_id=841043559904706580&redirect_uri=https%3A%2F%2Finitial-sortcode.vercel.app%2Fsign-in&response_type=code&scope=identify&state=${githubState}`}
                 onClick={() => generateState('discord')}
               >
                 <i className='fab fa-discord'></i> Sign Up with Discord

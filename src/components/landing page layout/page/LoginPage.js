@@ -60,7 +60,7 @@ export const LoginPage = () => {
             </div>
             <div className='signin-option discord'>
               <a
-                href={`https://discord.com/api/oauth2/authorize?client_id=841043559904706580&redirect_uri=http%3A%2F%2Flocalhost:3000%2Fsign-in&response_type=code&scope=identify&state=${githubState}`}
+                href={`https://discord.com/api/oauth2/authorize?client_id=841043559904706580&redirect_uri=https%3A%2F%2Finitial-sortcode.vercel.app%2Fsign-in&response_type=code&scope=identify&state=${githubState}`}
                 onClick={() => generateState('discord')}
               >
                 <i className='fab fa-discord'></i> Login with Discord
