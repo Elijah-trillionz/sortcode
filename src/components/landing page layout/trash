@@ -1,0 +1,714 @@
+import React from 'react';
+// for langing pages
+export const Header = () => {
+  window.addEventListener('load', () => {
+    // make images slide
+    const desktopImgs = document.querySelectorAll('.desktop-banners > .story');
+    const mobileImgs = document.querySelectorAll('.mobile-banners > .story');
+    // images for desktop-view
+    let imageIndex = desktopImgs.length - 1;
+    const loadDeskImage = (image) => {
+      desktopImgs.forEach((value) => {
+        value.style.opacity = 0;
+      });
+      desktopImgs[image].style.opacity = 1;
+    };
+    loadDeskImage(imageIndex);
+
+    const nextDeskImage = () => {
+      imageIndex--;
+      if (imageIndex < 0) {
+        imageIndex = desktopImgs.length - 1;
+      }
+      loadDeskImage(imageIndex);
+    };
+
+    setInterval(nextDeskImage, 10000);
+
+    // images for mobile-view
+    let mobileIndex = mobileImgs.length - 1;
+    const loadMobileImage = (image) => {
+      mobileImgs.forEach((value) => {
+        value.style.opacity = 0;
+      });
+      mobileImgs[image].style.opacity = 1;
+    };
+    loadMobileImage(mobileIndex);
+
+    const nextMobileImage = () => {
+      mobileIndex--;
+      if (mobileIndex < 0) {
+        mobileIndex = mobileImgs.length - 1;
+      }
+      loadMobileImage(mobileIndex);
+    };
+
+    setInterval(nextMobileImage, 10000);
+  });
+
+  return (
+    <>
+      <header>
+        <div className='top-header'>
+          <div className='logo'>
+            <h1>
+              Coding <span>Better</span>
+            </h1>
+          </div>
+          <div className='desktop-menu'>
+            <ul>
+              <li>
+                <a href='/signup'>Get Started</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div className='banners'>
+        <div className='desktop-banners'>
+          <div className='story'>
+            <img src={require('../../../assets/imgs/image1.jpeg')} alt='pro' />
+            <div className='thumbnail one right'>
+              <h3>Coding Challenges</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/image3 (2).jpeg')}
+              alt='pro'
+            />
+            <div className='thumbnail four left'>
+              <h3>Daily Quotes</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/image3 (1).jpeg')}
+              alt='pro'
+            />
+            <div className='thumbnail two left'>
+              <h3>Daily Exercises</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/image3 (4).jpeg')}
+              alt='pro'
+            />
+            <div className='thumbnail three right'>
+              <h3>Programming Quize</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          {/* <div className="diff">
+            <img src={require("../assetslast.jpeg")} alt="last" />
+          </div> */}
+        </div>
+        <div className='mobile-banners'>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/mobile-view 4.jpeg')}
+              alt='pro'
+              width='1024'
+            />
+            <div className='thumbnail one mobile'>
+              <h3>Coding Challenges</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/mobile-view 1.jpg')}
+              alt='pro'
+              width='1024'
+            />
+            <div className='thumbnail two mobile'>
+              <h3>Daily Exercises</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+          <div className='story'>
+            <img
+              src={require('../../../assets/imgs/mobile-view 2.jpeg')}
+              alt='pro'
+              width='1024'
+            />
+            <div className='thumbnail three mobile'>
+              <h3>Programming Quize</h3>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+
+/*
+.welcome header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 25px;
+  letter-spacing: 3px;
+  transition: 0.2s ease-in-out;
+  color: #ccc;
+  background-color: #1e2656;
+  border-radius: 0 0 15px 15px;
+  z-index: 100;
+}
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sponsor {
+  margin-top: 15px;
+  text-align: right;
+}
+/* .welcome header.sticky {
+  padding: 20px 22px;
+}
+header.sticky .sponsor {
+  display: none;
+} *
+.header h1 {
+  transition: 0.4s ease-in-out;
+}
+.welcome header ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.welcome header ul li {
+  list-style: none;
+}
+.welcome header ul li {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  margin: 0px 15px;
+  letter-spacing: 2px;
+  color: #eee;
+  transition: 0.2s linear;
+  border: 1.2px solid #eee;
+  border-radius: 3px;
+  padding: 5px 15px;
+  align-items: center;
+}
+.welcome header ul li:hover {
+  background-color: #ac539d;
+  padding: 8px 15px;
+}
+li > a {
+  text-decoration: none;
+  color: #eee;
+}
+
+.banners {
+  margin-top: 4.3pc;
+  height: 100vh;
+}
+.banners img {
+  max-width: 100%;
+  height: auto;
+  filter: opacity(0.8);
+}
+.story,
+.diff {
+  position: fixed;
+  z-index: 0;
+  transition: 1.8s linear;
+  opacity: 0;
+}
+.diff {
+  transition: 0s linear;
+}
+.story .thumbnail {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translate(0%, -50%);
+  background-color: #5c73da;
+  padding: 20px 12px;
+  border-radius: 10px;
+  color: #ccc;
+  line-height: 1.6;
+  letter-spacing: 2px;
+  word-spacing: 3px;
+  max-width: 400px;
+}
+.thumbnail.mobile {
+  right: 2%;
+  max-width: 250px;
+}
+.thumbnail h3 {
+  font-size: 25px;
+  font-family: cursive;
+  color: #eee;
+  padding-bottom: 10px;
+}
+.story .thumbnail.two {
+  background-color: #2f6b2f;
+}
+.story .thumbnail.three {
+  background-color: #6b2f61;
+  /* left: 55%; *
+}
+.story .thumbnail.four {
+  background-color: #676b2f;
+}
+.desktop-banners {
+  display: none;
+}
+.mobile-banners {
+  display: block;
+}
+.intro-container {
+  color: white;
+  height: 700px;
+  align-items: center;
+}
+.intro-word {
+  background-color: #9a9db5;
+  height: 200px;
+  position: relative;
+  opacity: 1;
+}
+.intro-word h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  text-align: center;
+  color: #1e2656;
+}
+.intro {
+  background-color: #b4b4c6;
+  padding: 30px;
+  min-width: 200px;
+  /* z-index: 1000; *
+  color: #000000;
+  position: relative;
+}
+.intro ul {
+  padding: 0;
+  margin-top: 3pc;
+  margin-bottom: 3pc;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.intro ul li {
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+  padding: 30px 20px;
+  font-size: 17px;
+  word-spacing: 2px;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+.intro .list-header {
+  padding-bottom: 15px;
+  font-size: 25px;
+  color: #1e2656;
+}
+.languages {
+  padding: 25px;
+  border-bottom: 1.5px solid rgba(46, 46, 46, 0.459);
+  border-top: 1.5px solid rgba(46, 46, 46, 0.459);
+  text-align: center;
+  color: #ccc;
+  font-family: monospace;
+  padding-top: 4pc;
+  padding-bottom: 3pc;
+  background: #b4b4c6;
+  position: relative;
+}
+.languages h3 {
+  font-size: 50px;
+  padding-bottom: 20px;
+  color: #1e2656;
+  word-wrap: break-word;
+}
+.languages span {
+  font-size: 16px;
+  color: #000;
+}
+.languages .logos {
+  margin-top: 40px;
+  font-size: 6em;
+  color: #1e2656;
+  background-color: #bfbfd1;
+  box-shadow: 2px 2px 40px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+  width: 100%;
+  position: relative;
+}
+.logos i {
+  padding: 29px;
+  opacity: 0.5;
+}
+.signin-button {
+  display: inline-block;
+  border: none;
+  outline: none;
+  background: linear-gradient(120deg, #2f6b2f, #676b2f);
+  color: white;
+  padding: 25px 22px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 9px;
+  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+.signin-button:hover {
+  background: linear-gradient(-120deg, #2f6b2f, #676b2f);
+}
+.logos i:nth-child(1),
+.logos i:nth-child(2),
+.logos i:nth-child(3) {
+  opacity: 1;
+}
+.space-for-image {
+  height: 50vh;
+}
+.send-info {
+  display: none;
+}
+
+/* footer *
+.welcome footer {
+  background-color: #3a3a3ae8;
+  color: #f4f4f4;
+  padding: 20px;
+  position: relative;
+}
+.left-content {
+  padding: 10px;
+}
+.left-content h3,
+.right-content h3 {
+  padding-bottom: 20px;
+  font-size: 25px;
+  opacity: 0.9;
+}
+.right-content a {
+  text-decoration: none;
+  color: #f4f4f4;
+}
+.left-content p {
+  padding-left: 10px;
+  padding-bottom: 13px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.15s linear;
+  font-family: cursive;
+  opacity: 0.75;
+}
+.left-content a {
+  text-decoration: none;
+  color: white;
+}
+.left-content p:hover {
+  opacity: 1;
+}
+.right-content i {
+  font-size: 35px;
+  padding: 10px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.15s linear;
+}
+.right-content i:hover {
+  opacity: 1;
+}
+.copyright {
+  /* border-top: 1.6px solid #ccc; *
+  text-align: center;
+  font-size: 20px;
+  padding-top: 1.5em;
+  margin-top: 1em;
+  opacity: 0.8;
+  font-family: cursive;
+}
+.fa-heart {
+  color: red;
+}
+
+/* loading component *
+
+ support *
+.support-page {
+  color: #fff;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.loading {
+  margin: 0 auto;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #ccc;
+  border-right: 4px solid #00000000;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+.inner-loading {
+  width: 10px;
+  height: 10px;
+  border: 3px solid #ccc;
+  border-left: 3px solid #00000000;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.dev-form {
+  color: #fff;
+  display: grid;
+  grid-template-columns: 400px auto;
+}
+.dev-form > .form {
+  padding: 20px 0;
+  border-right: 1px solid #ccc;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+.retrieve-password {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+}
+.retrieve-password h1 {
+  margin: 20px;
+  font-family: 'Caveat', cursive;
+}
+.retrieve-password > .pass-div {
+  border: 1px solid #ccc;
+  padding: 15px 22px;
+  min-width: 300px;
+  max-width: 350px;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+.retrieve-password form {
+  margin: 30px 10px;
+}
+.retrieve-password.pre form {
+  margin: 20px 0;
+}
+.retrieve-password.pre h2 {
+  color: #2e3747;
+  font-variant: small-caps;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 5px;
+}
+.form h1 {
+  text-align: center;
+  font-size: 40px;
+  padding-bottom: 10px;
+}
+.signup {
+  margin-top: 25px;
+}
+.signup-form {
+  padding: 24px 2em;
+}
+.alert {
+  background: rgba(255, 99, 71, 0.693);
+  color: white;
+  border: 1px solid #ccc;
+  padding: 15px 22px;
+  margin: 20px 8px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: auto 10px;
+  align-items: center;
+  column-gap: 20px;
+}
+.alert-cncl-btn {
+  cursor: pointer;
+}
+.alert.like {
+  background-color: #2e3747;
+  display: block;
+  text-align: center;
+  margin: 0;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 0;
+}
+.retrieve-password .alert {
+  background-color: tomato;
+}
+
+.signup-form label,
+.retrieve-password form > label {
+  font-size: 16px;
+  padding-left: 5px;
+}
+.signup-form input,
+.retrieve-password input,
+.submit-form {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  outline: none;
+  background-color: transparent;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  transition: border 0.3s ease-in-out;
+  color: #ccc;
+  font-size: 17px;
+}
+.signup-form input:focus {
+  border-color: #636363;
+}
+.retrieve-password input {
+  border-color: #2e3747;
+  color: #2e3747;
+}
+.signup-form .submit-form,
+.retrieve-password .submit-form {
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 9px;
+  margin-top: 30px;
+  background-color: #2e3747;
+  color: #ccc;
+}
+button.submit-form:disabled {
+  pointer-events: none;
+}
+.password {
+  position: relative;
+}
+.password i {
+  color: #636363;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translate(0, -50%);
+  transition: color 0.3s ease-in-out;
+}
+.password i.make-blue {
+  color: #5c73da;
+}
+.banner-ill {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 400px;
+  right: 0;
+  background-color: #2e3747;
+}
+.signin-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eaebfb;
+  z-index: 100;
+  border-radius: 20px;
+  min-width: 70%;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease-in;
+}
+.signin-modal.active {
+  opacity: 1;
+  max-height: 100%;
+}
+.signin-logo {
+  display: none;
+}
+.signin-header {
+  font-size: 20px;
+  font-family: cursive;
+  text-align: left;
+  border-bottom: 1px solid #17171733;
+  padding: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.signin-header .cnclBtn,
+.modal-header .cnclBtn {
+  font-size: 30px;
+  cursor: pointer;
+  font-weight: 900;
+}
+.signin-header .cnclBtn:hover,
+.modal-header .cnclBtn:hover {
+  color: red;
+}
+
+.login-call {
+  text-align: center;
+}
+.login-call a,
+.login-call span {
+  color: #5c73da;
+  cursor: pointer;
+  text-decoration: underline #5c73da;
+}
+.login-form {
+  display: none;
+}
+.login-form.active {
+  display: block;
+}
+.signup.deactivate {
+  display: none !important;
+}
+.dev-form {
+  display: grid;
+}
+
