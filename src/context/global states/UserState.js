@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect } from "react";
 import {
   GET_USER,
   GET_USERS,
@@ -9,10 +9,10 @@ import {
   SET_STATIC_ERROR,
   NEW_DESTINATION,
   INCREMENT_DAILY_UPVOTE,
-} from '../app reducers/Types';
-import UserReducer from '../app reducers/UserReducer';
-import { apiUrl as url } from '../../utils';
-import axios from 'axios';
+} from "../app reducers/Types";
+import UserReducer from "../app reducers/UserReducer";
+import { apiUrl as url } from "../../utils";
+import axios from "axios";
 
 const initialState = {
   users: [],
@@ -26,9 +26,9 @@ const initialState = {
   globalError: false,
   staticError: false,
   linkInfo: {
-    destination: '/dashboard/tasks/history',
-    className: 'fas fa-history',
-    title: 'See History',
+    destination: "/dashboard/tasks/history",
+    className: "fas fa-history",
+    title: "See History",
   },
   upvoteData: {
     numOfUpvotesToday: 1,
@@ -43,23 +43,23 @@ export const UserContext = createContext(initialState);
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
   const getDataFromCookie = (data) => {
-    const allCookies = document.cookie.split(';');
+    const allCookies = document.cookie.split(";");
     const cookie = allCookies.filter((cookie) => {
       return cookie.indexOf(data) !== -1;
     });
 
     if (cookie.length <= 0) return false;
 
-    return cookie.length >= 1 && cookie[0].trim().split('=')[1];
+    return cookie.length >= 1 && cookie[0].trim().split("=")[1];
   };
 
-  const token = getDataFromCookie('_github_token_')
-    ? getDataFromCookie('_github_token_')
-    : getDataFromCookie('_discord_token_');
+  const token = getDataFromCookie("_github_token_")
+    ? getDataFromCookie("_github_token_")
+    : getDataFromCookie("_discord_token_");
 
-  const tokenName = getDataFromCookie('_github_token_')
-    ? 'github-token'
-    : 'discord-token';
+  const tokenName = getDataFromCookie("_github_token_")
+    ? "github-token"
+    : "discord-token";
 
   // actions
   const getUsers = async () => {
@@ -87,7 +87,7 @@ export const UserProvider = ({ children }) => {
     try {
       if (token) {
         const res = await axios({
-          method: 'GET',
+          method: "GET",
           url: `${url}/api/auth/user`,
           headers: {
             [tokenName]: token,
@@ -105,7 +105,7 @@ export const UserProvider = ({ children }) => {
 
         if (res.data.signedInUser.upvoteData) {
           dispatch({
-            type: 'GET_DAILY_UPVOTE',
+            type: "GET_DAILY_UPVOTE",
             payload: res.data.signedInUser.upvoteData,
           });
         }
@@ -113,7 +113,7 @@ export const UserProvider = ({ children }) => {
         setChildLoading(false);
         setSpecialLoad(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -129,8 +129,15 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getUsers();
-    getUser();
+    let subscribed = true;
+    if (subscribed) {
+      getUsers();
+      getUser();
+    }
+
+    return () => {
+      subscribed = false;
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -140,7 +147,7 @@ export const UserProvider = ({ children }) => {
     try {
       if (token) {
         const res = await axios({
-          method: 'POST',
+          method: "POST",
           url: `${url}/api/upvote`,
           headers: {
             [tokenName]: token,
@@ -164,7 +171,7 @@ export const UserProvider = ({ children }) => {
       } else {
         setChildLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -188,7 +195,7 @@ export const UserProvider = ({ children }) => {
       };
       if (token) {
         const res = await axios({
-          method: 'POST',
+          method: "POST",
           url: `${url}/api/upvote/remove`,
           headers: {
             [tokenName]: token,
@@ -212,7 +219,7 @@ export const UserProvider = ({ children }) => {
       } else {
         setChildLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -248,7 +255,7 @@ export const UserProvider = ({ children }) => {
 
   const setSpecialLoad = (bool) => {
     dispatch({
-      type: 'SET_SPECIAL_LOADING',
+      type: "SET_SPECIAL_LOADING",
       payload: bool,
     });
   };

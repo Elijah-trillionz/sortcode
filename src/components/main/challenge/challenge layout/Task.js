@@ -4,7 +4,7 @@ import { Loading } from '../../layout/Loading';
 import { Helmet } from 'react-helmet-async';
 import { ErrorHandler } from '../../layout/ErrorHandler';
 import { Redirect } from 'react-router-dom';
-import marked from 'marked';
+import { marked } from "marked";
 
 export const Task = ({ codeValue, onChangeCodeValue }) => {
   const {

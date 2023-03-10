@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CSSQuizContext } from '../../../../../context/quiz states/CSSQuizState';
 import { Loading } from '../../../layout/Loading';
-import marked from 'marked';
+import { marked } from "marked";
 
 export const CSSQuizHistory = () => {
   const {

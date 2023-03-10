@@ -6,7 +6,7 @@ import { Loading } from '../../../layout/Loading';
 import { Link } from 'react-router-dom';
 import { CSSQuizHistory } from './CSSQuizHistory';
 import { Helmet } from 'react-helmet-async';
-import marked from 'marked';
+import { marked } from "marked";
 
 export const JSQuizHistory = () => {
   const {

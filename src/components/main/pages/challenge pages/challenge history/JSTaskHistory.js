@@ -4,7 +4,7 @@ import { UserContext } from '../../../../../context/global states/UserState';
 import { Loading } from '../../../layout/Loading';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import marked from 'marked';
+import { marked } from "marked";
 
 export const JSTaskHistory = () => {
   const {

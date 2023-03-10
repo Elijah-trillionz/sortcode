@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
-import { Questioning } from './Questioning';
-import { Loading } from '../../layout/Loading';
-import { ErrorHandler } from '../../layout/ErrorHandler';
-import { Redirect } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import { Questioning } from "./Questioning";
+import { Loading } from "../../layout/Loading";
+import { ErrorHandler } from "../../layout/ErrorHandler";
+import { Redirect } from "react-router-dom";
 
 export const Question = ({ QuizContext }) => {
+  const [current, setCurrent] = useState("done");
+  const [ids, setIds] = useState([]);
   const {
     questions,
     index,
@@ -16,10 +18,11 @@ export const Question = ({ QuizContext }) => {
 
   // generate ids for keys
   const uuidv100 = () => {
-    const letter = 'abcdefghijklmnopqrstuvwxyz';
-    const uuidArray = `${letter}1234567890123456789123456789$&#@*£€¥%${letter.toUpperCase()}`.split(
-      ''
-    );
+    const letter = "abcdefghijklmnopqrstuvwxyz";
+    const uuidArray =
+      `${letter}1234567890123456789123456789$&#@*£€¥%${letter.toUpperCase()}`.split(
+        ""
+      );
     const uuids = [];
     for (let i = 0; i < 10; i++) {
       uuids.push(uuidArray[Math.floor(Math.random() * uuidArray.length)]);
@@ -27,19 +30,21 @@ export const Question = ({ QuizContext }) => {
     return uuids;
   };
 
-  let current, ids;
-  const getQuestions = () => {
+  useEffect(() => {
     if (!parentLoading) {
-      ids = [
-        uuidv100().join(''),
-        uuidv100().join(''),
-        uuidv100().join(''),
-        uuidv100().join(''),
-      ];
-      return (current = index < questions.length ? questions[index] : 'done');
+      setIds([
+        uuidv100().join(""),
+        uuidv100().join(""),
+        uuidv100().join(""),
+        uuidv100().join(""),
+      ]);
+      setCurrent(index < questions.length ? questions[index] : "done");
     }
-  };
-  getQuestions();
+  }, [parentLoading, questions, index]);
+
+  useEffect(() => {
+    console.log(current);
+  }, [current]);
 
   // links
   const redirectLink = (link) => {
@@ -47,15 +52,15 @@ export const Question = ({ QuizContext }) => {
   };
 
   return (
-    <div className='questions-container'>
+    <div className="questions-container">
       {quizError ? (
-        <div className='error questions'>
-          <i className='fas fa-exclamation-triangle'></i> {quizError}
+        <div className="error questions">
+          <i className="fas fa-exclamation-triangle"></i> {quizError}
         </div>
       ) : (
         <>
           {parentLoading ? (
-            <div className='loading-indicator'>
+            <div className="loading-indicator">
               <Loading />
             </div>
           ) : (
@@ -65,11 +70,11 @@ export const Question = ({ QuizContext }) => {
                   errorMsg={quizGlobalError.errorMsg}
                   statusCode={quizGlobalError.status}
                   context={QuizContext}
-                  from='quiz'
+                  from="quiz"
                 />
               )}
-              {staticError && <Redirect push to='/login' />}
-              {current !== 'done' ? (
+              {staticError && <Redirect push to="/login" />}
+              {current !== "done" ? (
                 <Questioning
                   index={index}
                   ids={ids}
@@ -77,29 +82,29 @@ export const Question = ({ QuizContext }) => {
                   QuizContext={QuizContext}
                 />
               ) : (
-                <div className='done'>
+                <div className="done">
                   <h3>Yahoo! You completed all questions.</h3>
-                  <div className='options'>
+                  <div className="options">
                     <ul>
                       <li
-                        className='options-list'
+                        className="options-list"
                         key={1}
                         onClick={() =>
                           redirectLink(
-                            'https://www.twitter.com/elijahtrillionz'
+                            "https://www.twitter.com/elijahtrillionz"
                           )
                         }
                       >
-                        <b className='alph'>A: </b>
-                        <p className='alph'>Contribute questions</p>
+                        <b className="alph">A: </b>
+                        <p className="alph">Contribute questions</p>
                       </li>
                       <li
-                        className='options-list'
+                        className="options-list"
                         key={2}
-                        onClick={() => redirectLink('/dashboard/quiz/history')}
+                        onClick={() => redirectLink("/dashboard/quiz/history")}
                       >
-                        <b className='alph'>B: </b>
-                        <p className='alph'>See your history</p>
+                        <b className="alph">B: </b>
+                        <p className="alph">See your history</p>
                       </li>
                     </ul>
                   </div>

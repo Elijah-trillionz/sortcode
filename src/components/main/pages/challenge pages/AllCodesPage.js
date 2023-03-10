@@ -7,7 +7,7 @@ import { VotesTemplate } from '../../challenge/challenge layout/VotesTemplate';
 import { invokeExistingUpvotes } from '../../challenge/middleware/invokeExistingUpvotes';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import marked from 'marked';
+import { marked } from "marked";
 
 export const AllCodesPage = () => {
   const { currentUser, getUser, upvoteData, setNewDestination } = useContext(

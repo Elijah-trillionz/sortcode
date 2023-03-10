@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useReducer } from 'react';
-import ChallengeReducer from '../app reducers/ChallengeReducer';
-import { apiUrl as url } from '../../utils';
+import React, { createContext, useEffect, useReducer } from "react";
+import ChallengeReducer from "../app reducers/ChallengeReducer";
+import { apiUrl as url } from "../../utils";
 import {
   ADD_TASKS,
   NEXT_TASK,
@@ -19,8 +19,8 @@ import {
   DISPLAY_SAMPLE,
   GET_BENCHMARK_RESULT,
   SET_NEW_TASK_LOADING,
-} from '../app reducers/Types';
-import axios from 'axios';
+} from "../app reducers/Types";
+import axios from "axios";
 
 const initialState = {
   tasks: [],
@@ -36,7 +36,7 @@ const initialState = {
   challengeError: false,
   challengeGlobalError: false,
   staticError: false,
-  language: 'JS',
+  language: "JS",
   currentTaskId: 0,
   taskSample: false,
   benchmarkResult: false,
@@ -49,37 +49,37 @@ export const ChallengeContext = createContext(initialState);
 export const ChallengeProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ChallengeReducer, initialState);
   const getDataFromCookie = (data) => {
-    const allCookies = document.cookie.split(';');
+    const allCookies = document.cookie.split(";");
     const cookie = allCookies.filter((cookie) => {
       return cookie.indexOf(data) !== -1;
     });
 
     if (cookie.length <= 0) return false;
 
-    return cookie.length >= 1 && cookie[0].trim().split('=')[1];
+    return cookie.length >= 1 && cookie[0].trim().split("=")[1];
   };
 
-  const token = getDataFromCookie('_github_token_')
-    ? getDataFromCookie('_github_token_')
-    : getDataFromCookie('_discord_token_');
+  const token = getDataFromCookie("_github_token_")
+    ? getDataFromCookie("_github_token_")
+    : getDataFromCookie("_discord_token_");
 
-  const tokenName = getDataFromCookie('_github_token_')
-    ? 'github-token'
-    : 'discord-token';
+  const tokenName = getDataFromCookie("_github_token_")
+    ? "github-token"
+    : "discord-token";
 
   // actions
   // get current task and all tasks for javascript index
 
   const getTasksDetail = async () => {
-    const difficultyLvl = localStorage.getItem('difficultyLvl')
-      ? localStorage.getItem('difficultyLvl')
-      : 'beginners';
+    const difficultyLvl = localStorage.getItem("difficultyLvl")
+      ? localStorage.getItem("difficultyLvl")
+      : "beginners";
     setParentLoading(true);
     // get all tasks from magnus dever-api
     try {
       if (token) {
         const apiRes = await axios({
-          method: 'GET',
+          method: "GET",
           url: `${url}/api/tasks`,
           headers: {
             [tokenName]: token,
@@ -104,7 +104,7 @@ export const ChallengeProvider = ({ children }) => {
         // setParentLoading(true)
         if (apiRes.data.tasks.length > 0) {
           const res = await axios({
-            method: 'GET',
+            method: "GET",
             url: `${url}/api/tasks/index`,
             headers: {
               [tokenName]: token,
@@ -112,19 +112,19 @@ export const ChallengeProvider = ({ children }) => {
           });
 
           switch (difficultyLvl) {
-            case 'beginners':
+            case "beginners":
               dispatch({
                 type: CURRENT_TASK_NUM,
                 payload: res.data.numOfTasks[0],
               });
               break;
-            case 'intermediates':
+            case "intermediates":
               dispatch({
                 type: CURRENT_TASK_NUM,
                 payload: res.data.numOfTasks[1],
               });
               break;
-            case 'experts':
+            case "experts":
               dispatch({
                 type: CURRENT_TASK_NUM,
                 payload: res.data.numOfTasks[2],
@@ -140,7 +140,7 @@ export const ChallengeProvider = ({ children }) => {
       } else {
         setParentLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -154,16 +154,23 @@ export const ChallengeProvider = ({ children }) => {
     setParentLoading(false);
   };
   useEffect(() => {
-    getTasksDetail();
+    let subscribed = true;
+    if (subscribed) {
+      getTasksDetail();
+    }
+
+    return () => {
+      subscribed = false;
+    };
     // eslint-disable-next-line
   }, []);
 
   // get next question
   const nextTask = async () => {
     setNewTaskLoading(true);
-    const difficultyLvl = localStorage.getItem('difficultyLvl')
-      ? localStorage.getItem('difficultyLvl')
-      : 'beginners';
+    const difficultyLvl = localStorage.getItem("difficultyLvl")
+      ? localStorage.getItem("difficultyLvl")
+      : "beginners";
 
     try {
       if (token) {
@@ -173,7 +180,7 @@ export const ChallengeProvider = ({ children }) => {
         });
 
         await axios({
-          method: 'GET',
+          method: "GET",
           url: `${url}/api/tasks/update/${difficultyLvl}`,
           headers: {
             [tokenName]: token,
@@ -182,7 +189,7 @@ export const ChallengeProvider = ({ children }) => {
       } else {
         setNewTaskLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -203,7 +210,7 @@ export const ChallengeProvider = ({ children }) => {
     try {
       if (token) {
         const res = await axios({
-          method: 'GET',
+          method: "GET",
           url: `${url}/api/task-solutions/${language}`,
           headers: {
             [tokenName]: token,
@@ -221,7 +228,7 @@ export const ChallengeProvider = ({ children }) => {
       } else {
         setChildLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -232,7 +239,14 @@ export const ChallengeProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    allTaskSolutions('all');
+    let subscribed = true;
+    if (subscribed) {
+      allTaskSolutions("all");
+    }
+
+    return () => {
+      subscribed = false;
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -242,7 +256,7 @@ export const ChallengeProvider = ({ children }) => {
     try {
       if (token) {
         const res = await axios({
-          method: 'POST',
+          method: "POST",
           url: `${url}/api/task-solutions/new`,
           data: code,
           headers: {
@@ -269,7 +283,7 @@ export const ChallengeProvider = ({ children }) => {
       } else {
         setPrivLoading(false);
         return setStaticError(
-          'You are not authenticated. Try logging in again.',
+          "You are not authenticated. Try logging in again.",
           401
         );
       }
@@ -299,7 +313,7 @@ export const ChallengeProvider = ({ children }) => {
       setChallengeGlobalError(true, `Connection error`, 500);
       dispatch({
         type: GET_BENCHMARK_RESULT,
-        payload: { result: false, error: 'Connection error' },
+        payload: { result: false, error: "Connection error" },
       });
     }
     setPrivLoading(false);
