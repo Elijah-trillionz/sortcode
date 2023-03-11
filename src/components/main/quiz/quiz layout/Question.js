@@ -42,10 +42,6 @@ export const Question = ({ QuizContext }) => {
     }
   }, [parentLoading, questions, index]);
 
-  useEffect(() => {
-    console.log(current);
-  }, [current]);
-
   // links
   const redirectLink = (link) => {
     window.location = link;
